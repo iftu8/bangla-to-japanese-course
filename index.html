@@ -1,486 +1,499 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nihongo Shikhi - Ultra AI Edition 5.0 MAX</title>
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>Tokyo - Learn & Connect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600;800&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        /* 🌃 ULTRA NEON & PERFORMANCE VARIABLES */
+        /* 🌸 TOKYO SOCIAL THEME VARIABLES */
         :root {
-            --bg-dark: #020205;
-            --bg-panel: rgba(10, 10, 20, 0.85);
-            --neon-pink: #ff0055;
-            --neon-cyan: #00f3ff;
-            --neon-gold: #ffb703;
-            --neon-purple: #b100e8;
-            --neon-green: #00ff88;
-            --text-main: #f0f0f0;
-            --text-muted: #a0a0a5;
-            --glass-border: rgba(0, 243, 255, 0.15);
-            --transition-speed: 0.3s;
+            --bg-main: #fafafa;
+            --bg-card: #ffffff;
+            --text-main: #262626;
+            --text-muted: #8e8e8e;
+            --primary-accent: #e1306c; /* Instagram pink/red */
+            --secondary-accent: #405de6;
+            --border-color: #dbdbdb;
+            --like-color: #ed4956;
+            --font-logo: 'Dancing Script', cursive;
+            --font-ui: 'Poppins', sans-serif;
+            --font-jp: 'Noto Sans JP', sans-serif;
         }
 
-        body.amoled-mode {
-            --bg-dark: #000000;
-            --bg-panel: #050505;
-            --glass-border: rgba(255, 255, 255, 0.05);
-        }
-
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
-            font-family: 'Hind Siliguri', sans-serif; 
-            background-color: var(--bg-dark); 
+            font-family: var(--font-ui); 
+            background-color: var(--bg-main); 
             color: var(--text-main); 
             overflow-x: hidden;
-            display: flex; flex-direction: column; min-height: 100vh;
-            background-image: radial-gradient(circle at 10% 20%, rgba(255, 0, 85, 0.05) 0%, transparent 40%),
-                              radial-gradient(circle at 90% 80%, rgba(0, 243, 255, 0.05) 0%, transparent 40%),
-                              radial-gradient(circle at 50% 50%, rgba(177, 0, 232, 0.05) 0%, transparent 50%);
-            background-attachment: fixed;
-            will-change: background-color;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .jp-text { font-family: 'Noto Sans JP', sans-serif; font-weight: 900; }
+        /* 📱 MAIN LAYOUT */
+        .app-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            min-height: 100vh;
+            border-left: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            position: relative;
+            padding-bottom: 70px; /* Space for bottom nav */
+        }
+
+        /* 🔝 HEADER */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: var(--font-logo);
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--secondary-accent), var(--primary-accent), #fd1d1d, #f56040);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .header-icons i {
+            font-size: 24px;
+            margin-left: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .header-icons i:hover { color: var(--primary-accent); }
+
+        /* 📖 STORIES BAR (CATEGORIES) */
+        .stories-container {
+            display: flex;
+            gap: 15px;
+            padding: 15px 20px;
+            overflow-x: auto;
+            border-bottom: 1px solid var(--border-color);
+            scrollbar-width: none; /* Firefox */
+        }
+        .stories-container::-webkit-scrollbar { display: none; } /* Chrome */
+
+        .story {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            min-width: 70px;
+        }
+        .story-ring {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            padding: 3px;
+            margin-bottom: 5px;
+            transition: transform 0.2s;
+        }
+        .story-ring:hover { transform: scale(1.05); }
+        .story-inner {
+            width: 100%;
+            height: 100%;
+            background: var(--bg-card);
+            border-radius: 50%;
+            border: 2px solid var(--bg-card);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: var(--font-jp);
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--text-main);
+        }
+        .story-name { font-size: 12px; font-weight: 600; color: var(--text-main); }
+
+        /* 🖼️ POST FEED */
+        .feed-section { padding-top: 10px; display: none; }
+        .feed-section.active { display: block; animation: fadeIn 0.4s; }
+
+        .post {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        .post-header {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+        }
+        .post-avatar {
+            width: 35px; height: 35px; border-radius: 50%;
+            background: var(--primary-accent); margin-right: 10px;
+            display: flex; justify-content: center; align-items: center; color: #fff; font-weight: bold;
+        }
+        .post-user { font-weight: 600; font-size: 14px; }
+        .post-location { font-size: 12px; color: var(--text-muted); }
         
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-dark); }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(var(--neon-cyan), var(--neon-purple)); border-radius: 4px; }
-
-        header { 
-            background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(12px); 
-            padding: 15px 3%; display: flex; justify-content: space-between; align-items: center; 
-            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--glass-border);
-            box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+        .post-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            background: #eee;
+            cursor: pointer;
         }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 15px;
+            font-size: 24px;
+        }
+        .action-left { display: flex; gap: 15px; }
+        .action-icon { cursor: pointer; transition: 0.2s; color: var(--text-main); }
+        .action-icon.liked { color: var(--like-color); animation: heartPop 0.3s; }
+
+        @keyframes heartPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        .post-content { padding: 0 15px; }
+        .post-likes { font-weight: 600; font-size: 14px; margin-bottom: 5px; }
+        .post-caption { font-size: 14px; margin-bottom: 5px; }
+        .jp-word { font-family: var(--font-jp); font-size: 22px; font-weight: bold; color: var(--primary-accent); }
+        .post-time { font-size: 10px; color: var(--text-muted); text-transform: uppercase; margin-top: 8px;}
+
+        /* 🤖 DM / AI CHAT SECTION */
+        .chat-section { display: none; height: calc(100vh - 130px); flex-direction: column; background: #fff;}
+        .chat-section.active { display: flex; animation: fadeIn 0.4s; }
+        .chat-header {
+            padding: 15px; border-bottom: 1px solid var(--border-color);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; background: #fafafa;}
+        .msg-bubble { max-width: 75%; padding: 12px 16px; border-radius: 20px; font-size: 14px; line-height: 1.4; }
+        .msg-ai { background: #f1f0f0; color: #000; align-self: flex-start; border-bottom-left-radius: 5px; }
+        .msg-user { background: var(--secondary-accent); color: #fff; align-self: flex-end; border-bottom-right-radius: 5px; }
         
-        .logo { font-size: 26px; font-weight: 800; text-transform: uppercase; cursor: pointer; display: flex; gap: 8px; align-items: center; letter-spacing: 1px;}
-        .logo span { color: var(--neon-cyan); text-shadow: 0 0 15px var(--neon-cyan); }
-        
-        .nav-tabs { display: flex; gap: 8px; list-style: none; flex-wrap: wrap; }
-        .tab-btn { 
-            background: transparent; border: 1px solid transparent; color: var(--text-main); 
-            padding: 8px 16px; font-size: 15px; font-weight: 700; cursor: pointer; 
-            border-radius: 6px; transition: all var(--transition-speed); 
+        .chat-input-area {
+            padding: 15px; border-top: 1px solid var(--border-color); background: #fff;
+            display: flex; gap: 10px; align-items: center;
         }
-        .tab-btn.active, .tab-btn:hover { 
-            background: rgba(0, 243, 255, 0.1); border-color: var(--neon-cyan); 
-            color: var(--neon-cyan); text-shadow: 0 0 8px var(--neon-cyan); transform: translateY(-2px);
+        .chat-input-area input {
+            flex: 1; padding: 12px 20px; border: 1px solid var(--border-color);
+            border-radius: 30px; outline: none; font-family: var(--font-ui); font-size: 14px;
         }
-        
-        .theme-toggle { background: #111; border: 1px solid var(--neon-gold); color: var(--neon-gold); padding: 8px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; }
-
-        .app-container { flex: 1; max-width: 1400px; margin: 30px auto; padding: 0 20px; width: 100%; }
-        
-        .app-panel { display: none; opacity: 0; transform: translateY(15px); }
-        .app-panel.active { display: block; opacity: 1; transform: translateY(0); transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-
-        .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
-        .glass-card { 
-            background: var(--bg-panel); border: 1px solid var(--glass-border); 
-            border-radius: 16px; padding: 35px; position: relative; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
+        .chat-input-area input:focus { border-color: var(--secondary-accent); }
+        .btn-send {
+            background: none; border: none; color: var(--secondary-accent);
+            font-size: 20px; cursor: pointer; font-weight: bold; padding: 0 10px;
         }
-        
-        .btn { 
-            padding: 14px 28px; border: none; border-radius: 8px; font-weight: bold; 
-            cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 1.5px; 
-            position: relative; overflow: hidden; z-index: 1; font-size: 15px;
+
+        /* 🎯 QUIZ SECTION (POLL STYLE) */
+        .quiz-section { display: none; padding: 20px; }
+        .quiz-section.active { display: block; animation: fadeIn 0.4s; }
+        .poll-card {
+            background: #fff; border: 1px solid var(--border-color);
+            border-radius: 15px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px; text-align: center;
         }
-        .btn:active { transform: scale(0.95); }
-        .btn-cyan { background: linear-gradient(45deg, var(--neon-cyan), #0088ff); color: #000; box-shadow: 0 0 20px rgba(0,243,255,0.4); }
-        .btn-pink { background: transparent; border: 2px solid var(--neon-pink); color: var(--neon-pink); }
-        .btn-pink:hover { background: var(--neon-pink); color: #fff; box-shadow: 0 0 20px rgba(255,0,85,0.4); }
-
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 18px; }
-        .flip-card { width: 100%; height: 150px; perspective: 1000px; cursor: pointer; }
-        .flip-card-inner { 
-            position: relative; width: 100%; height: 100%; text-align: center; 
-            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; 
+        .poll-q { font-size: 40px; font-family: var(--font-jp); margin: 20px 0; color: var(--primary-accent); }
+        .poll-options { display: flex; flex-direction: column; gap: 10px; }
+        .poll-btn {
+            padding: 15px; border: 1px solid var(--border-color); background: #fafafa;
+            border-radius: 10px; font-family: var(--font-ui); font-weight: 600; cursor: pointer;
+            transition: 0.2s; font-size: 16px;
         }
-        .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
-        .flip-card-front, .flip-card-back { 
-            position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; 
-            border-radius: 14px; display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            border: 1px solid var(--glass-border); background: rgba(255,255,255,0.03); 
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+        .poll-btn:hover { background: #f0f0f0; }
+        .poll-btn.correct { background: #4cd137; color: #fff; border-color: #4cd137; }
+        .poll-btn.wrong { background: #e84118; color: #fff; border-color: #e84118; }
+
+        /* ⬇️ BOTTOM NAVIGATION */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 100%; max-width: 600px;
+            background: var(--bg-card); border-top: 1px solid var(--border-color);
+            display: flex; justify-content: space-around; align-items: center;
+            padding: 15px 0; z-index: 1000;
         }
-        .flip-card-front h2 { font-size: 50px; color: var(--neon-cyan); }
-        .flip-card-back { background: rgba(255, 0, 85, 0.1); border-color: var(--neon-pink); transform: rotateY(180deg); padding: 10px;}
-        .flip-card-back h3 { font-size: 24px; color: #fff; margin-bottom: 5px;}
-        .flip-card-back p { font-size: 15px; color: var(--neon-cyan); font-weight: bold; line-height: 1.2;}
-
-        .course-modules { display: grid; grid-template-columns: 1fr; gap: 25px; }
-        .module-box { 
-            background: linear-gradient(90deg, rgba(0,0,0,0.8) 0%, rgba(20,20,30,0.6) 100%); 
-            border-left: 5px solid var(--neon-gold); padding: 25px; border-radius: 0 12px 12px 0; transition: 0.3s;
+        .nav-item {
+            font-size: 22px; color: var(--text-main); cursor: pointer; transition: 0.3s;
         }
-        .module-box:hover { background: rgba(255, 183, 3, 0.05); transform: translateX(10px); border-left-color: var(--neon-cyan);}
-        .grammar-rule { background: #0a0a0a; padding: 18px; border-radius: 8px; margin-top: 15px; color: #ddd; border: 1px dashed #555; font-size: 16px;}
+        .nav-item.active { color: var(--primary-accent); transform: translateY(-3px); }
 
-        /* AI Chat UI Upgraded */
-        .ai-layout { display: grid; grid-template-columns: 1fr 3fr; gap: 20px; height: 70vh; }
-        .chat-ui { background: rgba(0,0,0,0.7); border: 1px solid var(--glass-border); border-radius: 16px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 0 30px rgba(0,243,255,0.05);}
-        .chat-messages { flex: 1; padding: 25px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px; }
-        .msg-bubble { max-width: 80%; padding: 15px 20px; border-radius: 18px; font-size: 16px; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; line-height: 1.5; box-shadow: 0 4px 15px rgba(0,0,0,0.2);}
-        @keyframes popIn { from { opacity: 0; transform: scale(0.8) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-        .msg-ai { background: rgba(0, 243, 255, 0.08); border: 1px solid rgba(0, 243, 255, 0.2); align-self: flex-start; border-bottom-left-radius: 4px; }
-        .msg-user { background: rgba(255, 0, 85, 0.15); border: 1px solid rgba(255, 0, 85, 0.3); align-self: flex-end; border-bottom-right-radius: 4px; }
-        .chat-input { display: flex; padding: 20px; background: rgba(0,0,0,0.9); border-top: 1px solid var(--glass-border); }
-        .chat-input input { flex: 1; padding: 15px; background: #0a0a0a; border: 1px solid #333; color: #fff; border-radius: 8px; outline: none; margin-right: 15px; font-size:16px; transition: 0.3s;}
-        .chat-input input:focus { border-color: var(--neon-cyan); box-shadow: inset 0 0 10px rgba(0,243,255,0.1);}
-        
-        .typing-indicator { font-style: italic; color: var(--neon-purple); animation: blink 1.5s infinite; font-weight: bold;}
-        @keyframes blink { 0% {opacity: 0.3;} 50% {opacity: 1;} 100% {opacity: 0.3;} }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Quiz UI */
-        .quiz-hud { display: flex; justify-content: space-between; border-bottom: 2px dashed #444; padding-bottom: 20px; margin-bottom: 35px; font-size: 20px; font-weight: bold; }
-        .question-text { font-size: 35px; text-align: center; margin-bottom: 40px; text-shadow: 0 0 15px rgba(0,243,255,0.3);}
-        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .opt-btn { background: #0a0a0a; border: 2px solid #333; padding: 22px; border-radius: 12px; font-size: 20px; color: #fff; cursor: pointer; transition: 0.2s; font-weight: bold;}
-        .opt-btn:hover { border-color: var(--neon-purple); background: rgba(177, 0, 232, 0.15); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(177,0,232,0.2);}
-        .opt-btn.correct { background: var(--neon-green) !important; border-color: var(--neon-green) !important; color: #000; box-shadow: 0 0 25px rgba(0,255,136,0.5); transform: scale(1.05);}
-        .opt-btn.wrong { background: var(--neon-pink) !important; border-color: var(--neon-pink) !important; box-shadow: 0 0 25px rgba(255,0,85,0.5);}
-
-        /* Proverbs Section */
-        .proverb-card { background: rgba(0,0,0,0.6); padding: 20px; border-radius: 10px; border-left: 4px solid var(--neon-purple); margin-bottom: 15px; }
-        .proverb-jp { font-size: 24px; color: var(--neon-gold); margin-bottom: 5px; }
-
-        #toast { position: fixed; bottom: -100px; right: 30px; background: rgba(10,10,20,0.95); border-left: 5px solid var(--neon-cyan); color: #fff; padding: 18px 30px; border-radius: 6px; transition: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); z-index: 9999; box-shadow: 0 10px 30px rgba(0,0,0,0.6); font-weight:bold; font-size: 16px;}
-        #toast.show { bottom: 30px; }
-
-        @media(max-width: 950px) {
-            .dashboard-grid, .ai-layout, .options-grid { grid-template-columns: 1fr; }
-            .ai-layout { height: 85vh; }
-            header { flex-direction: column; gap: 15px; padding: 15px; }
-            .nav-tabs { justify-content: center; }
+        /* Toast Alert */
+        #toast {
+            position: fixed; top: 70px; left: 50%; transform: translateX(-50%);
+            background: rgba(38, 38, 38, 0.9); color: #fff; padding: 12px 25px;
+            border-radius: 30px; font-size: 14px; font-weight: 600;
+            z-index: 9999; opacity: 0; pointer-events: none; transition: 0.3s;
         }
+        #toast.show { opacity: 1; transform: translateX(-50%) translateY(10px); }
+
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo" onclick="switchTab('dashboard')">🎌 Nihongo <span>Ultra Max</span></div>
-        <ul class="nav-tabs">
-            <li><button class="tab-btn active" onclick="switchTab('dashboard')">ড্যাশবোর্ড</button></li>
-            <li><button class="tab-btn" onclick="switchTab('course')">মাস্টার কোর্স</button></li>
-            <li><button class="tab-btn" onclick="switchTab('alphabet')">বর্ণমালা ও শব্দ</button></li>
-            <li><button class="tab-btn" onclick="switchTab('kanji')">কাঞ্জি N5</button></li>
-            <li><button class="tab-btn" onclick="switchTab('proverbs')">প্রবাদ বাক্য</button></li>
-            <li><button class="tab-btn" onclick="switchTab('ai-lab')">AI অনুবাদক 🌐</button></li>
-            <li><button class="tab-btn" onclick="switchTab('quiz')">মেগা কুইজ</button></li>
-            <li><button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙 ডার্ক</button></li>
-        </ul>
-    </header>
+    <div class="app-container">
+        <header>
+            <div class="logo">Tokyo</div>
+            <div class="header-icons">
+                <i class="fa-regular fa-heart" onclick="showToast('No new notifications')"></i>
+                <i class="fa-brands fa-facebook-messenger" onclick="switchTab('chat')"></i>
+            </div>
+        </header>
 
-    <main class="app-container">
-        
-        <section id="panel-dashboard" class="app-panel active">
-            <div class="dashboard-grid">
-                <div class="glass-card">
-                    <h1 style="font-size: 45px; margin-bottom: 15px; line-height: 1.2;">Master Japanese with <br><span style="color:var(--neon-cyan)">Unknown API Engine</span> 🚀</h1>
-                    <p style="color: var(--text-muted); margin-bottom: 30px; font-size:18px; line-height: 1.6;">রিয়েল-টাইম ট্রান্সলেশন API, বিশাল ডেটাবেস এবং স্মার্ট এআই সেনসেই নিয়ে তৈরি বাংলাদেশের সবচেয়ে অ্যাডভান্সড জাপানি ভাষা শেখার প্ল্যাটফর্ম।</p>
-                    <div style="display:flex; gap:20px; flex-wrap:wrap;">
-                        <button class="btn btn-cyan" onclick="switchTab('ai-lab')">▶ AI কে প্রশ্ন করুন</button>
-                        <button class="btn btn-pink" onclick="switchTab('course')">📚 কোর্স শুরু করুন</button>
-                    </div>
+        <main id="tab-home" class="feed-section active">
+            <div class="stories-container">
+                <div class="story" onclick="showToast('Hiragana Module Coming Soon!')">
+                    <div class="story-ring"><div class="story-inner">あ</div></div>
+                    <span class="story-name">Hiragana</span>
                 </div>
-                <div class="glass-card" style="display:flex; flex-direction:column; justify-content:center; text-align:center; background:rgba(0,0,0,0.6); border-color: var(--neon-purple);">
-                    <p style="color:var(--neon-gold); font-weight:bold; text-transform:uppercase; letter-spacing: 2px;">আপনার বর্তমান লেভেল</p>
-                    <h2 id="dash-xp" style="font-size: 60px; color:var(--neon-cyan); margin:15px 0; text-shadow: 0 0 20px rgba(0,243,255,0.3);">0 <span style="font-size:20px; color:#fff;">XP</span></h2>
-                    <h3 id="dash-rank" style="color:var(--neon-purple); font-size: 22px;">Ronin (Beginner)</h3>
+                <div class="story" onclick="showToast('Katakana Module Coming Soon!')">
+                    <div class="story-ring"><div class="story-inner">ア</div></div>
+                    <span class="story-name">Katakana</span>
+                </div>
+                <div class="story" onclick="showToast('Kanji Module Coming Soon!')">
+                    <div class="story-ring"><div class="story-inner" style="color:var(--secondary-accent)">日</div></div>
+                    <span class="story-name">Kanji N5</span>
+                </div>
+                <div class="story" onclick="switchTab('quiz')">
+                    <div class="story-ring"><div class="story-inner" style="color:#4cd137">?</div></div>
+                    <span class="story-name">Quizzes</span>
                 </div>
             </div>
-        </section>
 
-        <section id="panel-course" class="app-panel">
-            <div class="glass-card">
-                <h2 style="color: var(--neon-gold); margin-bottom: 25px; text-align:center; font-size: 32px;">জাপানি ভাষা A-Z ফুল কোর্স</h2>
-                <div class="course-modules" id="course-list">
-                    </div>
-            </div>
-        </section>
-
-        <section id="panel-alphabet" class="app-panel">
-            <div class="glass-card">
-                <div style="display:flex; gap:15px; justify-content:center; margin-bottom:35px; flex-wrap:wrap;">
-                    <button class="btn btn-pink" onclick="renderCards('hiragana')">হিরাগানা</button>
-                    <button class="btn btn-cyan" onclick="renderCards('katakana')">কাতাকানা</button>
-                    <button class="btn" style="border:2px solid var(--neon-gold); color:var(--neon-gold);" onclick="renderCards('vocab')">১০০+ ভোকেবুলারি</button>
+            <div id="feed-container">
                 </div>
-                <h2 id="card-title" style="text-align: center; margin-bottom: 25px; color: var(--neon-purple); font-size: 28px;">লোডিং...</h2>
-                <div class="grid-container" id="card-grid"></div>
-            </div>
-        </section>
+        </main>
 
-        <section id="panel-kanji" class="app-panel">
-            <div class="glass-card">
-                <h2 style="text-align: center; margin-bottom: 25px; color: var(--neon-gold); font-size: 32px;">এসেনশিয়াল কাঞ্জি (JLPT N5)</h2>
-                <p style="text-align: center; color: var(--text-muted); margin-bottom: 30px;">নিচের কাঞ্জিগুলোতে ক্লিক করে মুখস্থ করুন এবং পয়েন্ট জিতুন!</p>
-                <div class="grid-container" id="kanji-grid" style="grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));"></div>
-            </div>
-        </section>
-
-        <section id="panel-proverbs" class="app-panel">
-            <div class="glass-card">
-                <h2 style="text-align: center; margin-bottom: 25px; color: var(--neon-purple); font-size: 32px;">জাপানি প্রবাদ (Kotowaza)</h2>
-                <div id="proverb-list"></div>
-            </div>
-        </section>
-
-        <section id="panel-ai-lab" class="app-panel">
-            <div class="ai-layout">
-                <div class="glass-card" style="padding:20px; display: flex; flex-direction: column; justify-content: space-between;">
-                    <div>
-                        <h3 style="color:var(--neon-cyan); border-bottom:1px dashed #555; padding-bottom:10px; margin-bottom:15px; font-size: 22px;">🌐 Unknown API Engine</h3>
-                        <p style="font-size:15px; color:#ccc; line-height:1.8;">
-                            এই সেকশনটি একটি <b>পাবলিক গ্লোবাল API (MyMemory)</b> এর সাথে কানেক্টেড। 
-                            <br><br>
-                            👉 আপনি যেকোনো <b>ইংরেজি বা বাংলা</b> বাক্য লিখলে এটি রিয়েল-টাইমে ইন্টারনেট থেকে সার্চ করে তার জাপানি অনুবাদ বের করে আনবে। কোনো API Key-এর প্রয়োজন নেই!
-                        </p>
-                    </div>
-                    <div style="background: rgba(255,0,85,0.1); padding: 15px; border-radius: 8px; border: 1px solid var(--neon-pink);">
-                        <p style="font-size: 13px; color: var(--neon-pink);">*এটি রিয়েল-টাইম API, তাই উত্তর আসতে ১-২ সেকেন্ড সময় লাগতে পারে।</p>
-                    </div>
-                </div>
-                
-                <div class="chat-ui">
-                    <div class="chat-messages" id="chat-box">
-                        <div class="msg-bubble msg-ai jp-text">
-                            こんにちは (Konnichiwa)! আমি আকিরা। আমি ইন্টারনেটের সাহায্যে যেকোনো বাক্যের অনুবাদ করতে পারি। আপনি ইংরেজিতে বা বাংলায় যেকোনো কিছু লিখে টেস্ট করে দেখুন! (যেমন: "I love you" বা "আমি ভাত খাই")
-                        </div>
-                    </div>
-                    <div class="chat-input">
-                        <input type="text" id="ai-input" placeholder="যেকোনো বাক্য লিখুন..." onkeypress="if(event.key==='Enter') sendChat()">
-                        <button class="btn btn-cyan" onclick="sendChat()">Send 🚀</button>
-                    </div>
+        <main id="tab-chat" class="chat-section">
+            <div class="chat-header">
+                <div class="post-avatar" style="background:linear-gradient(45deg, #405de6, #833ab4);">AI</div>
+                <div>
+                    <div style="font-weight:600; font-size:16px;">Akira Sensei (AI)</div>
+                    <div style="font-size:12px; color:#4cd137;">Online</div>
                 </div>
             </div>
-        </section>
-
-        <section id="panel-quiz" class="app-panel">
-            <div class="glass-card" style="max-width: 900px; margin: 0 auto; padding: 40px;">
-                <div class="quiz-hud">
-                    <span>প্রশ্ন: <span id="q-count" style="color:var(--neon-cyan); font-size: 24px;">1</span></span>
-                    <span style="color:var(--neon-gold)">স্ট্রিক: <span id="q-streak" style="font-size: 24px;">0</span> 🔥</span>
-                    <span>স্কোর: <span id="q-score" style="color:var(--neon-pink); font-size: 24px;">0</span></span>
+            <div class="chat-messages" id="chat-box">
+                <div class="msg-bubble msg-ai">
+                    Kon'nichiwa! 👋 I am your AI Sensei. Type any English or Bengali word, and I will translate it to Japanese for you using external APIs!
                 </div>
-                
-                <div class="question-text jp-text" id="quiz-q">Loading...</div>
-                <div class="options-grid" id="quiz-options"></div>
             </div>
-        </section>
-    </main>
+            <div class="chat-input-area">
+                <i class="fa-solid fa-microphone btn-send" onclick="showToast('Voice typing requires HTTPS')"></i>
+                <input type="text" id="ai-input" placeholder="Message..." onkeypress="if(event.key==='Enter') sendMessage()">
+                <button class="btn-send" onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </main>
 
-    <div id="toast">Message</div>
+        <main id="tab-quiz" class="quiz-section">
+            <div style="text-align:center; margin-bottom: 20px;">
+                <h2 style="font-family: var(--font-logo); font-size:35px; color:var(--primary-accent);">Interactive Polls</h2>
+                <p style="color:var(--text-muted); font-size:14px;">Test your knowledge in real-time</p>
+            </div>
+            <div id="quiz-container">
+                </div>
+        </main>
+
+        <div class="bottom-nav">
+            <i class="fa-solid fa-house nav-item active" onclick="switchTab('home')"></i>
+            <i class="fa-solid fa-magnifying-glass nav-item" onclick="showToast('Search feature unlocked in Pro Max!')"></i>
+            <i class="fa-solid fa-square-poll-vertical nav-item" onclick="switchTab('quiz')"></i>
+            <i class="fa-brands fa-rocketchat nav-item" onclick="switchTab('chat')"></i>
+            <i class="fa-regular fa-circle-user nav-item" onclick="showToast('Guest Profile (No Login Mode)')"></i>
+        </div>
+    </div>
+
+    <div id="toast">Alert!</div>
 
     <script>
-        /* =========================================================
-           🚀 MASSIVELY EXPANDED DATABASE
-           ========================================================= */
-        const db = {
-            hiragana: [
-                {k:"あ", r:"a"}, {k:"い", r:"i"}, {k:"う", r:"u"}, {k:"え", r:"e"}, {k:"お", r:"o"},
-                {k:"か", r:"ka"}, {k:"き", r:"ki"}, {k:"く", r:"ku"}, {k:"け", r:"ke"}, {k:"こ", r:"ko"},
-                {k:"さ", r:"sa"}, {k:"し", r:"shi"}, {k:"す", r:"su"}, {k:"せ", r:"se"}, {k:"そ", r:"so"},
-                {k:"た", r:"ta"}, {k:"ち", r:"chi"}, {k:"つ", r:"tsu"}, {k:"て", r:"te"}, {k:"と", r:"to"},
-                {k:"な", r:"na"}, {k:"に", r:"ni"}, {k:"ぬ", r:"nu"}, {k:"ね", r:"ne"}, {k:"の", r:"no"},
-                {k:"は", r:"ha"}, {k:"ひ", r:"hi"}, {k:"ふ", r:"fu"}, {k:"へ", r:"he"}, {k:"ほ", r:"ho"}
-            ],
-            katakana: [
-                {k:"ア", r:"a"}, {k:"イ", r:"i"}, {k:"ウ", r:"u"}, {k:"エ", r:"e"}, {k:"オ", r:"o"},
-                {k:"カ", r:"ka"}, {k:"キ", r:"ki"}, {k:"ク", r:"ku"}, {k:"ケ", r:"ke"}, {k:"コ", r:"ko"},
-                {k:"サ", r:"sa"}, {k:"シ", r:"shi"}, {k:"ス", r:"su"}, {k:"セ", r:"se"}, {k:"ソ", r:"so"}
-            ],
-            kanji: [
-                {k:"日", r:"nichi", m:"সূর্য/দিন"}, {k:"月", r:"getsu", m:"চাঁদ/মাস"},
-                {k:"水", r:"sui", m:"পানি"}, {k:"火", r:"ka", m:"আগুন"},
-                {k:"木", r:"moku", m:"গাছ/কাঠ"}, {k:"金", r:"kin", m:"স্বর্ণ/টাকা"},
-                {k:"土", r:"do", m:"মাটি"}, {k:"人", r:"jin", m:"মানুষ"},
-                {k:"男", r:"dan", m:"পুরুষ"}, {k:"女", r:"jo", m:"নারী"},
-                {k:"上", r:"jou", m:"উপরে"}, {k:"下", r:"ka", m:"নিচে"},
-                {k:"一", r:"ichi", m:"এক"}, {k:"二", r:"ni", m:"দুই"}, {k:"三", r:"san", m:"তিন"},
-                {k:"四", r:"yon", m:"চার"}, {k:"五", r:"go", m:"পাঁচ"}, {k:"六", r:"roku", m:"ছয়"},
-                {k:"七", r:"nana", m:"সাত"}, {k:"八", r:"hachi", m:"আট"}, {k:"九", r:"kyuu", m:"নয়"},
-                {k:"十", r:"juu", m:"দশ"}, {k:"百", r:"hyaku", m:"একশত"}, {k:"千", r:"sen", m:"হাজার"}
-            ],
-            vocab: [
-                {jp:"ありがとう", bn:"ধন্যবাদ", en:"thank you"}, {jp:"さようなら", bn:"বিদায়", en:"goodbye"},
-                {jp:"おいしい", bn:"সুস্বাদু", en:"delicious"}, {jp:"みず", bn:"পানি", en:"water"},
-                {jp:"あい", bn:"ভালোবাসা", en:"love"}, {jp:"ともだち", bn:"বন্ধু", en:"friend"},
-                {jp:"がっこう", bn:"স্কুল", en:"school"}, {jp:"くるま", bn:"গাড়ি", en:"car"},
-                {jp:"ねこ", bn:"বিড়াল", en:"cat"}, {jp:"いぬ", bn:"কুকুর", en:"dog"},
-                {jp:"ほん", bn:"বই", en:"book"}, {jp:"たべる", bn:"খাওয়া", en:"eat"},
-                {jp:"のむ", bn:"পান করা", en:"drink"}, {jp:"みる", bn:"দেখা", en:"see"},
-                {jp:"いく", bn:"যাওয়া", en:"go"}, {jp:"くる", bn:"আসা", en:"come"},
-                {jp:"おおきい", bn:"বড়", en:"big"}, {jp:"ちいさい", bn:"ছোট", en:"small"}
-            ],
-            course: [
-                { title: "মডিউল ১: বেসিক অভিবাদন (Greetings)", content: "জাপানিরা সম্মান দেখাতে খুব পছন্দ করে। <br><br><b>Konnichiwa (こんにちは):</b> শুভ দিন / হ্যালো।<br><b>Ohayou (おはよう):</b> শুভ সকাল।<br><b>Konbanwa (こんばんは):</b> শুভ সন্ধ্যা।<br><b>Arigatou (ありがとう):</b> ধন্যবাদ।" },
-                { title: "মডিউল ২: বাক্য গঠন ও Particles", content: "জাপানি বাক্যের গঠন হলো: Subject + Object + Verb (SOV).<br><br><div class='grammar-rule'><b>নিয়ম:</b> [Subject] + は (Wa) + [Object] + です (Desu).<br><b>উদাহরণ:</b> わたし は 学生 です (Watashi wa gakusei desu) - আমি হই ছাত্র।</div>" },
-                { title: "মডিউল ৩: প্রশ্ন করা (Ka particle)", content: "কোনো বাক্যকে প্রশ্নবোধক করতে বাক্যের শেষে শুধু <b>か (Ka)</b> বসাতে হয়।<br><br><div class='grammar-rule'><b>উদাহরণ:</b> Ogenki desu ka? (おげんき です か？) - আপনি কেমন আছেন?<br>Kore wa nan desu ka? (これ は なん です か) - এটি কী?</div>" },
-                { title: "মডিউল ৪: অবস্থান বোঝানো (Ni / De)", content: "কোথাও যাওয়া বা কিছু ঘটার স্থান বোঝাতে Particle ব্যবহার হয়।<br><br><div class='grammar-rule'><b>নি (に):</b> নির্দিষ্ট গন্তব্য বোঝাতে। গাক্কো নি ইকিমাশিতা (স্কুলে গিয়েছিলাম)।<br><b>দে (で):</b> কোনো কাজ করার স্থান বোঝাতে। রেস্তোরাঁ দে তাবেমাস (রেস্তোরাঁয় খাই)।</div>" }
-            ],
-            proverbs: [
-                { jp: "猿も木から落ちる", r: "Saru mo ki kara ochiru", m: "বানরও গাছ থেকে পড়ে (অর্থাৎ, দক্ষ মানুষেরও ভুল হয়)।" },
-                { jp: "七転び八起き", r: "Nanakorobi yaoki", m: "সাতবার পড়লে আটবার ওঠো (কখনো হাল ছেড়ো না)।" },
-                { jp: "花より団子", r: "Hana yori dango", m: "ফুলের চেয়ে মিষ্টি ভালো (সৌন্দর্যের চেয়ে কাজের জিনিস বেশি জরুরি)।" },
-                { jp: "一期一会", r: "Ichigo ichie", m: "একটি সুযোগ, একটি সাক্ষাৎ (প্রতিটি মুহূর্তই মূল্যবান)।" }
-            ]
-        };
+        // ==========================================
+        // 📚 DYNAMIC DATABASE FOR FEED & QUIZ
+        // ==========================================
+        const postDatabase = [
+            { id: 1, user: "japan_travels", loc: "Tokyo, Japan", jp: "桜", romaji: "Sakura", en: "Cherry Blossom", imgKey: "cherry blossom japan", likes: 1245 },
+            { id: 2, user: "nihongo_daily", loc: "Kyoto", jp: "猫", romaji: "Neko", en: "Cat", imgKey: "cat japan", likes: 892 },
+            { id: 3, user: "anime_world", loc: "Shibuya", jp: "友達", romaji: "Tomodachi", en: "Friend", imgKey: "friends tokyo", likes: 3042 },
+            { id: 4, user: "foodie_jp", loc: "Osaka", jp: "美味しい", romaji: "Oishii", en: "Delicious", imgKey: "sushi ramen", likes: 4521 },
+            { id: 5, user: "nature_jp", loc: "Mt. Fuji", jp: "山", romaji: "Yama", en: "Mountain", imgKey: "mount fuji", likes: 5612 }
+        ];
 
-        const superDB = [...db.vocab, ...db.kanji.map(k=>({jp:k.k, bn:k.m, en:k.r}))];
-
-        /* =========================================================
-           ⚙️ SYSTEM STATE & LOGIC
-           ========================================================= */
-        let xp = 0; let streak = 0; let qCount = 0; let currentCorrect = ""; let isAmoled = false;
-
-        window.onload = () => {
-            renderCourse(); renderCards('hiragana'); renderKanji(); renderProverbs(); initQuiz();
-            showToast("System Booted: Unknown API Online 🌐");
-        };
-
+        // ==========================================
+        // 🚀 UI MANAGEMENT
+        // ==========================================
         function switchTab(tabId) {
-            document.querySelectorAll('.app-panel').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            // Hide all tabs
+            document.querySelectorAll('main').forEach(el => el.classList.remove('active'));
+            // Remove active class from nav icons
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             
-            const target = document.getElementById('panel-' + tabId);
-            target.style.display = "block"; void target.offsetWidth; target.classList.add('active');
-            event.currentTarget.classList.add('active');
+            // Show target
+            document.getElementById('tab-' + tabId).classList.add('active');
             
-            setTimeout(() => { document.querySelectorAll('.app-panel:not(.active)').forEach(p => p.style.display = "none"); }, 500);
-        }
-
-        function toggleTheme() {
-            isAmoled = !isAmoled; document.body.classList.toggle('amoled-mode');
-            document.getElementById('theme-btn').innerText = isAmoled ? "☀️ নিয়ন" : "🌙 ডার্ক";
+            // Highlight nav icon based on tab
+            const icons = document.querySelectorAll('.nav-item');
+            if(tabId === 'home') icons[0].classList.add('active');
+            if(tabId === 'quiz') icons[2].classList.add('active');
+            if(tabId === 'chat') icons[3].classList.add('active');
         }
 
         function showToast(msg) {
-            const t = document.getElementById('toast'); t.innerText = msg; t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 3000);
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2500);
         }
 
-        function addXP(val) {
-            xp += val; document.getElementById('dash-xp').innerHTML = `${xp} <span style="font-size:20px; color:#fff;">XP</span>`;
-            document.getElementById('q-score').innerText = xp;
-            let r = "Ronin (Beginner)";
-            if(xp > 150) r = "Ninja 🥷"; if(xp > 500) r = "Samurai ⚔️"; if(xp > 1500) r = "Sensei 🐉";
-            document.getElementById('dash-rank').innerText = r;
-        }
+        // ==========================================
+        // 🖼️ FEED GENERATOR (WITH FAST IMAGES)
+        // ==========================================
+        function renderFeed() {
+            const feed = document.getElementById('feed-container');
+            feed.innerHTML = "";
 
-        /* =========================================================
-           ⚡ RENDER FUNCTIONS
-           ========================================================= */
-        function renderCourse() {
-            const list = document.getElementById('course-list');
-            const frag = document.createDocumentFragment();
-            db.course.forEach(mod => {
-                const div = document.createElement('div'); div.className = 'module-box';
-                div.innerHTML = `<h3 style="color:var(--neon-cyan); margin-bottom:12px; font-size:22px;">${mod.title}</h3><p style="color:#ddd; line-height:1.7; font-size:16px;">${mod.content}</p>`;
-                frag.appendChild(div);
-            });
-            list.appendChild(frag);
-        }
-
-        function renderCards(type) {
-            const grid = document.getElementById('card-grid'); grid.innerHTML = "";
-            const frag = document.createDocumentFragment(); 
-            let data = db[type]; let color = type === 'hiragana' ? "var(--neon-pink)" : (type === 'katakana' ? "var(--neon-cyan)" : "var(--neon-gold)");
-            document.getElementById('card-title').innerText = type.toUpperCase() + " ডেটাবেস";
-
-            data.forEach(item => {
-                const k = item.k || item.jp; const r = item.r || item.en; const m = item.m || item.bn || '';
-                const div = document.createElement('div'); div.className = 'flip-card';
-                div.innerHTML = `
-                    <div class="flip-card-inner" onclick="addXP(3)">
-                        <div class="flip-card-front"><h2 class="jp-text" style="color:${color}">${k}</h2></div>
-                        <div class="flip-card-back" style="border-color:${color}"><h3>${r}</h3><p>${m}</p></div>
-                    </div>`;
-                frag.appendChild(div);
-            });
-            grid.appendChild(frag);
-        }
-
-        function renderKanji() {
-            const grid = document.getElementById('kanji-grid'); const frag = document.createDocumentFragment();
-            db.kanji.forEach(item => {
-                const div = document.createElement('div'); div.className = 'flip-card';
-                div.innerHTML = `
-                    <div class="flip-card-inner" onclick="addXP(5)">
-                        <div class="flip-card-front"><h2 class="jp-text" style="color:var(--neon-gold); font-size: 60px;">${item.k}</h2></div>
-                        <div class="flip-card-back" style="border-color:var(--neon-gold)"><h3>${item.r}</h3><p>${item.m}</p></div>
-                    </div>`;
-                frag.appendChild(div);
-            });
-            grid.appendChild(frag);
-        }
-
-        function renderProverbs() {
-            const list = document.getElementById('proverb-list'); const frag = document.createDocumentFragment();
-            db.proverbs.forEach(p => {
-                const div = document.createElement('div'); div.className = 'proverb-card';
-                div.innerHTML = `<div class="proverb-jp jp-text">${p.jp}</div><div style="color:var(--text-muted); font-style:italic; margin-bottom:8px;">"${p.r}"</div><div style="color:#fff; font-weight:bold;">অর্থ: ${p.m}</div>`;
-                frag.appendChild(div);
-            });
-            list.appendChild(frag);
-        }
-
-        /* =========================================================
-           🧠 UNKNOWN API ENGINE (MyMemory Translation)
-           ========================================================= */
-        async function sendChat() {
-            const input = document.getElementById('ai-input');
-            let text = input.value.trim();
-            if(!text) return;
-
-            appendMsg(text, 'user');
-            input.value = "";
-            
-            // Unique ID for typing indicator
-            const tempId = 'typing-' + Date.now();
-            appendMsg('<span class="typing-indicator">ইন্টারনেট থেকে অনুবাদ খোঁজা হচ্ছে... 🌐</span>', 'ai', tempId);
-
-            try {
-                // 1. First check offline DB for high accuracy on basics
-                let found = superDB.find(item => item.bn === text.toLowerCase() || item.en === text.toLowerCase());
-                if(found) {
-                    document.getElementById(tempId).remove();
-                    appendMsg(`এর জাপানি অর্থ হলো: <br><span class="jp-text" style="font-size:32px; color:var(--neon-cyan);">${found.jp}</span><br>(${found.bn} / ${found.en})`, 'ai');
-                    addXP(10);
-                    return;
-                }
-
-                // 2. Fetch from Public Translation API (Unknown API)
-                // Determine source language (Bengali or English)
-                const isBengali = /[\u0980-\u09FF]/.test(text);
-                const langpair = isBengali ? 'bn|ja' : 'en|ja';
+            postDatabase.forEach(post => {
+                // Using Unsplash Source API for fast, beautiful, theme-related photos
+                const imgUrl = `https://source.unsplash.com/600x400/?${encodeURIComponent(post.imgKey)}`;
                 
-                const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${langpair}`;
-                const response = await fetch(url);
-                const data = await response.json();
+                const html = `
+                <div class="post" id="post-${post.id}">
+                    <div class="post-header">
+                        <div class="post-avatar">${post.user.charAt(0).toUpperCase()}</div>
+                        <div>
+                            <div class="post-user">${post.user}</div>
+                            <div class="post-location">${post.loc}</div>
+                        </div>
+                    </div>
+                    
+                    <img src="${imgUrl}" class="post-image" alt="${post.en}" ondblclick="toggleLike(${post.id})">
+                    
+                    <div class="post-actions">
+                        <div class="action-left">
+                            <i class="fa-regular fa-heart action-icon" id="like-icon-${post.id}" onclick="toggleLike(${post.id})"></i>
+                            <i class="fa-regular fa-comment action-icon" onclick="showToast('Comments disabled in Guest Mode')"></i>
+                            <i class="fa-regular fa-paper-plane action-icon" onclick="showToast('Shared!')"></i>
+                        </div>
+                        <i class="fa-solid fa-download action-icon" onclick="downloadImage('${imgUrl}', '${post.romaji}')" style="color:var(--secondary-accent)"></i>
+                    </div>
+                    
+                    <div class="post-content">
+                        <div class="post-likes"><span id="like-count-${post.id}">${post.likes.toLocaleString()}</span> likes</div>
+                        <div class="post-caption">
+                            <b>${post.user}</b> Learn a new word today! <br>
+                            <span class="jp-word">${post.jp}</span> (${post.romaji}) - ${post.en}
+                        </div>
+                        <div class="post-time">${Math.floor(Math.random() * 23) + 1} HOURS AGO</div>
+                    </div>
+                </div>`;
+                feed.innerHTML += html;
+            });
+        }
+
+        // Like Toggle System
+        let likedPosts = new Set();
+        function toggleLike(id) {
+            const icon = document.getElementById(`like-icon-${id}`);
+            const countEl = document.getElementById(`like-count-${id}`);
+            let currentCount = parseInt(countEl.innerText.replace(/,/g, ''));
+
+            if(likedPosts.has(id)) {
+                icon.classList.remove('fa-solid', 'liked');
+                icon.classList.add('fa-regular');
+                countEl.innerText = (currentCount - 1).toLocaleString();
+                likedPosts.delete(id);
+            } else {
+                icon.classList.remove('fa-regular');
+                icon.classList.add('fa-solid', 'liked');
+                countEl.innerText = (currentCount + 1).toLocaleString();
+                likedPosts.add(id);
                 
-                document.getElementById(tempId).remove();
-
-                if(data && data.responseData && data.responseData.translatedText) {
-                    const translatedText = data.responseData.translatedText;
-                    appendMsg(`এর জাপানি অনুবাদ হলো:<br><span class="jp-text" style="font-size:28px; color:var(--neon-gold); display:block; margin-top:10px;">${translatedText}</span>`, 'ai');
-                    addXP(15);
-                } else {
-                    throw new Error("No translation found");
-                }
-
-            } catch (error) {
-                if(document.getElementById(tempId)) document.getElementById(tempId).remove();
-                appendMsg("দুঃখিত, বর্তমানে API সার্ভারে সমস্যা হচ্ছে। দয়া করে কিছুক্ষণ পর আবার চেষ্টা করুন বা সহজ শব্দ লিখুন।", 'ai');
+                // Add pop animation
+                icon.style.animation = 'none';
+                setTimeout(() => icon.style.animation = 'heartPop 0.3s ease', 10);
             }
         }
 
-        function appendMsg(html, type, id = null) {
+        // Image Download System (Free & No Login)
+        async function downloadImage(imageSrc, filename) {
+            showToast("Downloading image...");
+            try {
+                const response = await fetch(imageSrc);
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = `TokyoApp_${filename}.jpg`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+                showToast("Download Complete! ✅");
+            } catch (err) {
+                // Fallback for CORS blocks
+                window.open(imageSrc, '_blank');
+                showToast("Opened in new tab to save.");
+            }
+        }
+
+        // ==========================================
+        // 🤖 AI CHAT SYSTEM (MyMemory API)
+        // ==========================================
+        async function sendMessage() {
+            const input = document.getElementById('ai-input');
+            const text = input.value.trim();
+            if(!text) return;
+
+            // User Message
+            appendMessage(text, 'user');
+            input.value = "";
+            
+            // AI Loading state
+            const loadId = 'msg-' + Date.now();
+            appendMessage('<i class="fa-solid fa-ellipsis" style="animation: pulse 1s infinite;"></i> Typing...', 'ai', loadId);
+
+            try {
+                // Determine source lang pair (Bengali or English to Japanese)
+                const isBengali = /[\u0980-\u09FF]/.test(text);
+                const langpair = isBengali ? 'bn|ja' : 'en|ja';
+                
+                // Fetch translation from free external API
+                const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${langpair}`;
+                const res = await fetch(url);
+                const data = await res.json();
+                
+                document.getElementById(loadId).remove();
+
+                if(data && data.responseData && data.responseData.translatedText) {
+                    const reply = `
+                        <span style="font-family:var(--font-jp); font-size:20px; color:var(--primary-accent); display:block; margin-bottom:5px;">
+                            ${data.responseData.translatedText}
+                        </span>
+                        <small style="color:#666;">(Translated via Cloud API)</small>
+                    `;
+                    appendMessage(reply, 'ai');
+                } else {
+                    throw new Error("API Limit");
+                }
+            } catch(e) {
+                document.getElementById(loadId).remove();
+                appendMessage("Sorry, the network is busy. Try a simpler word.", 'ai');
+            }
+        }
+
+        function appendMessage(html, type, id = null) {
             const box = document.getElementById('chat-box');
             const div = document.createElement('div');
             div.className = `msg-bubble msg-${type}`;
@@ -490,59 +503,67 @@
             box.scrollTop = box.scrollHeight;
         }
 
-        /* =========================================================
-           🎯 MEGA QUIZ ENGINE
-           ========================================================= */
-        function initQuiz() {
-            qCount++; document.getElementById('q-count').innerText = qCount;
-            const qEl = document.getElementById('quiz-q');
-            const optEl = document.getElementById('quiz-options');
-            optEl.innerHTML = "";
+        // ==========================================
+        // 🎯 QUIZ POLL ENGINE
+        // ==========================================
+        const quizData = [
+            { q: "水", ans: "Water", options: ["Fire", "Tree", "Water", "Gold"] },
+            { q: "こんにちは", ans: "Hello", options: ["Goodbye", "Hello", "Sorry", "Thanks"] },
+            { q: "車", ans: "Car", options: ["Train", "Car", "Bicycle", "Bus"] }
+        ];
 
-            const pool = Math.random() > 0.5 ? db.vocab : db.kanji;
-            const target = pool[Math.floor(Math.random() * pool.length)];
-            
-            const questionJP = target.jp || target.k;
-            currentCorrect = target.bn || target.m;
-            
-            qEl.innerHTML = `<span style="font-size:70px; color:var(--neon-cyan); display:block; text-shadow:0 0 20px rgba(0,243,255,0.4);">${questionJP}</span><span style="font-size:20px; color:var(--text-muted)">এর সঠিক অর্থ কী?</span>`;
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = "";
 
-            let options = new Set([currentCorrect]);
-            while(options.size < 4) {
-                const wrong = pool[Math.floor(Math.random() * pool.length)];
-                options.add(wrong.bn || wrong.m);
-            }
-            const shuffled = Array.from(options).sort(() => Math.random() - 0.5);
+            quizData.forEach((item, index) => {
+                let optionsHtml = '';
+                // Shuffle options
+                let shuffled = [...item.options].sort(() => Math.random() - 0.5);
+                
+                shuffled.forEach(opt => {
+                    optionsHtml += `<button class="poll-btn" onclick="checkPoll(this, '${opt}', '${item.ans}', ${index})">${opt}</button>`;
+                });
 
-            shuffled.forEach(opt => {
-                const btn = document.createElement('button');
-                btn.className = 'opt-btn'; btn.innerText = opt;
-                btn.onclick = () => checkAns(btn, opt === currentCorrect);
-                optEl.appendChild(btn);
+                container.innerHTML += `
+                    <div class="poll-card" id="poll-${index}">
+                        <div style="font-size:12px; font-weight:bold; color:var(--text-muted); text-transform:uppercase;">Poll ${index + 1}</div>
+                        <div class="poll-q">${item.q}</div>
+                        <div class="poll-options" id="options-${index}">
+                            ${optionsHtml}
+                        </div>
+                    </div>
+                `;
             });
         }
 
-        function checkAns(btn, isCorrect) {
-            const btns = document.querySelectorAll('.opt-btn');
-            btns.forEach(b => b.style.pointerEvents = 'none');
+        function checkPoll(btn, selected, correct, pollIndex) {
+            const container = document.getElementById(`options-${pollIndex}`);
+            const buttons = container.querySelectorAll('.poll-btn');
+            
+            // Disable all buttons in this poll
+            buttons.forEach(b => b.style.pointerEvents = 'none');
 
-            if(isCorrect) {
-                btn.classList.add('correct'); streak++;
-                const earn = streak > 3 ? 25 : 15; addXP(earn);
-                showToast(`অসাধারণ! সঠিক উত্তর। +${earn} XP`);
+            if(selected === correct) {
+                btn.classList.add('correct');
+                showToast("Correct! +10 Points 🌟");
             } else {
-                btn.classList.add('wrong'); streak = 0;
-                btns.forEach(b => { if(b.innerText === currentCorrect) b.classList.add('correct'); });
-                showToast("ইশ! ভুল উত্তর।");
+                btn.classList.add('wrong');
+                // Highlight the correct one
+                buttons.forEach(b => {
+                    if(b.innerText === correct) b.classList.add('correct');
+                });
+                showToast("Oops! Incorrect. ❌");
             }
-            
-            document.getElementById('q-streak').innerText = streak;
-            
-            setTimeout(() => {
-                document.getElementById('quiz-q').style.opacity = 0;
-                setTimeout(() => { initQuiz(); document.getElementById('quiz-q').style.opacity = 1; }, 200);
-            }, 1200);
         }
+
+        // ==========================================
+        // 🚀 INITIALIZATION
+        // ==========================================
+        window.onload = () => {
+            renderFeed();
+            renderQuiz();
+        };
     </script>
 </body>
 </html>
