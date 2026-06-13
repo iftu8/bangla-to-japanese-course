@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo Shikhi Ultimate - Learn Japanese Fast</title>
+    <style>
+        /* Modern Design Variables */
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #2d3436;
+            --primary-color: #ff4757;
+            --primary-hover: #ff6b81;
+            --secondary-color: #2ed573;
+            --accent-color: #1e90ff;
+            --nav-bg: rgba(255, 255, 255, 0.85);
+            --card-bg: #ffffff;
+            --border-color: #dfe6e9;
+            --shadow: 0 10px 30px rgba(0,0,0,0.06);
+            --gradient: linear-gradient(135deg, #ff4757, #ff6b81);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f1419;
+            --text-color: #f5f6fa;
+            --primary-color: #ff6b81;
+            --primary-hover: #ff4757;
+            --secondary-color: #2ecc71;
+            --accent-color: #74b9ff;
+            --nav-bg: rgba(15, 20, 25, 0.85);
+            --card-bg: #1e2732;
+            --border-color: #2f3640;
+            --shadow: 0 10px 30px rgba(0,0,0,0.4);
+            --gradient: linear-gradient(135deg, #ff6b81, #ff4757);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        /* Fast Rendering Reset */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; line-height: 1.6; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary-color); }
+
+        /* User Progress Bar (Top) */
+        #top-progress { position: fixed; top: 0; left: 0; height: 4px; background: var(--gradient); width: 0%; z-index: 10000; transition: width 0.3s ease; }
+
+        /* Glassmorphism Navbar */
+        header { background-color: var(--nav-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--glass-shadow); position: sticky; top: 0; z-index: 999; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .logo { font-size: 28px; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; cursor: pointer; letter-spacing: -1px; }
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 16px; transition: color 0.3s; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0; background: var(--primary-color); transition: width 0.3s; }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-actions { display: flex; gap: 12px; align-items: center; }
+
+        /* Buttons */
+        .btn { padding: 12px 24px; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s; font-size: 15px; }
+        .btn:active { transform: scale(0.95); }
+        .btn-primary { background: var(--gradient); color: white; box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3); }
+        .btn-primary:hover { box-shadow: 0 8px 25px rgba(255, 71, 87, 0.5); transform: translateY(-2px); }
+        .btn-theme { background: var(--card-bg); color: var(--text-color); border: 1px solid var(--border-color); box-shadow: var(--shadow); }
+
+        /* Hero Section */
+        .hero { text-align: center; padding: 100px 5%; background: var(--gradient); color: white; border-radius: 0 0 50px 50px; position: relative; overflow: hidden; }
+        .hero h1 { font-size: 55px; margin-bottom: 20px; font-weight: 900; line-height: 1.2; text-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .hero p { font-size: 20px; margin-bottom: 40px; font-weight: 500; opacity: 0.95; }
+
+        /* Live Stats Dashboard */
+        .stats-wrapper { max-width: 1200px; margin: -50px auto 40px; padding: 0 20px; position: relative; z-index: 10; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+        .stat-card { background: var(--card-bg); padding: 30px; border-radius: 20px; text-align: center; box-shadow: var(--shadow); border: 1px solid var(--border-color); backdrop-filter: blur(10px); }
+        .stat-card h3 { font-size: 38px; color: var(--primary-color); font-weight: 800; margin-bottom: 5px; }
+        .stat-card p { font-size: 15px; font-weight: 600; color: var(--text-color); opacity: 0.7; }
+
+        /* Containers & Typography */
+        .section-container { max-width: 1200px; margin: 80px auto; padding: 0 20px; }
+        .section-title { text-align: center; margin-bottom: 50px; font-size: 40px; font-weight: 800; color: var(--text-color); position: relative; }
+        .section-title::after { content: ''; display: block; width: 60px; height: 4px; background: var(--primary-color); margin: 15px auto 0; border-radius: 2px; }
+
+        /* Advanced Flashcards (3D Flip) */
+        .flashcard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; perspective: 1000px; }
+        .flashcard { background: transparent; height: 160px; cursor: pointer; perspective: 1000px; }
+        .flashcard-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; border-radius: 20px; box-shadow: var(--shadow); }
+        .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+        .flashcard-front, .flashcard-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; border: 1px solid var(--border-color); }
+        .flashcard-front { background: var(--card-bg); color: var(--primary-color); }
+        .flashcard-front h2 { font-size: 36px; margin-bottom: 5px; }
+        .flashcard-back { background: var(--gradient); color: white; transform: rotateY(180deg); }
+        .flashcard-back h3 { font-size: 24px; font-weight: 700; }
+
+        /* Dynamic Quiz Engine UI */
+        .quiz-app { max-width: 700px; margin: 0 auto; background: var(--card-bg); padding: 40px; border-radius: 24px; box-shadow: var(--shadow); border: 1px solid var(--border-color); }
+        .quiz-header { display: flex; justify-content: space-between; margin-bottom: 30px; font-weight: bold; color: var(--text-color); opacity: 0.8; font-size: 16px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
+        .quiz-question { font-size: 26px; font-weight: 800; margin-bottom: 30px; line-height: 1.4; }
+        .quiz-options { display: grid; gap: 15px; }
+        .q-btn { padding: 18px 25px; font-size: 18px; border: 2px solid var(--border-color); background: var(--bg-color); color: var(--text-color); border-radius: 15px; cursor: pointer; text-align: left; font-weight: 600; transition: all 0.2s; }
+        .q-btn:hover { border-color: var(--primary-color); background: rgba(255,71,87,0.05); transform: translateX(5px); }
+        .q-btn.correct { background: var(--secondary-color); color: white; border-color: var(--secondary-color); }
+        .q-btn.wrong { background: var(--primary-color); color: white; border-color: var(--primary-color); }
+
+        /* Smart AI Chat UI */
+        .ai-chat-box { background: var(--card-bg); border-radius: 24px; display: flex; flex-direction: column; height: 450px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border-color); }
+        .chat-messages { flex: 1; padding: 25px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+        .msg { max-width: 80%; padding: 15px 20px; border-radius: 18px; font-size: 16px; font-weight: 500; animation: fadeIn 0.3s ease; }
+        .msg.bot { background: var(--bg-color); align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid var(--border-color); }
+        .msg.user { background: var(--primary-color); color: white; align-self: flex-end; border-bottom-right-radius: 4px; box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3); }
+        .chat-input { padding: 20px; background: var(--bg-color); border-top: 1px solid var(--border-color); display: flex; gap: 10px; }
+        .chat-input select { flex: 1; padding: 15px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-color); font-size: 16px; font-weight: 600; cursor: pointer; outline: none; transition: border 0.3s; }
+        .chat-input select:focus { border-color: var(--primary-color); }
+
+        /* Custom Toast Notification */
+        .toast-container { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 10px; z-index: 99999; }
+        .toast { background: var(--card-bg); color: var(--text-color); padding: 15px 25px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); border-left: 5px solid var(--primary-color); display: flex; align-items: center; gap: 10px; font-weight: 600; transform: translateX(120%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .toast.show { transform: translateX(0); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Responsive */
+        @media(max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 38px; }
+            .stat-card h3 { font-size: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="top-progress"></div>
+
+    <header>
+        <div class="logo" onclick="window.scrollTo(0,0)">🇯🇵 নিহঙ্গ শিখি Pro Max</div>
+        <ul class="nav-links">
+            <li><a href="#flashcards">ফ্ল্যাশকার্ড</a></li>
+            <li><a href="#ai-zone">এআই চ্যাট</a></li>
+            <li><a href="#quiz">কুইজ ইঞ্জিন</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="btn btn-theme" id="themeToggle" onclick="toggleTheme()">🌙 ডার্ক</button>
+            <button class="btn btn-primary" onclick="showToast('লগিন সিস্টেম ডেভেলপমেন্টের কাজ চলছে! 🚀')">লগিন</button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>সবচেয়ে দ্রুত জাপানি ভাষা শিখুন</h1>
+        <p>অ্যাডভান্সড ফ্ল্যাশকার্ড, লাইভ এআই চ্যাট এবং ডাইনামিক কুইজ সিস্টেমের মাধ্যমে।</p>
+        <button class="btn btn-primary" style="background:#fff; color:var(--primary-color); font-size: 18px; padding: 15px 35px;" onclick="document.getElementById('flashcards').scrollIntoView()">পড়া শুরু করুন ⬇</button>
+    </section>
+
+    <div class="stats-wrapper">
+        <div class="stats-grid">
+            <div class="stat-card"><h3>N5-N1</h3><p>সম্পূর্ণ কোর্স লেভেল</p></div>
+            <div class="stat-card"><h3 id="savedScoreDisplay">০</h3><p>আপনার মোট এক্সপি (XP)</p></div>
+            <div class="stat-card"><h3>ফ্রি</h3><p>আজীবন অ্যাক্সেস</p></div>
+        </div>
+    </div>
+
+    <section id="flashcards" class="section-container">
+        <h2 class="section-title">🧠 স্মার্ট ফ্ল্যাশকার্ড (Smart Memory)</h2>
+        <p style="text-align: center; margin-bottom: 30px; font-weight: 600; opacity: 0.8;">কার্ডের ওপর ক্লিক করুন, অর্থ দেখুন এবং এআই উচ্চারণ শুনুন।</p>
+        
+        <div class="flashcard-grid" id="flashcardContainer">
+            </div>
+    </section>
+
+    <section id="ai-zone" class="section-container">
+        <h2 class="section-title">🤖 এআই স্পিকিং পার্টনার</h2>
+        <div class="ai-chat-box">
+            <div class="chat-messages" id="chatMsgs">
+                <div class="msg bot">こんにちは! আমি আপনার এআই টিউটর। নিচের ড্রপডাউন থেকে বাক্য সিলেক্ট করুন, আমি উচ্চারণ করে শেখাবো!</div>
+            </div>
+            <div class="chat-input">
+                <select id="chatSelector" onchange="triggerAIChat()">
+                    <option value="">💬 এখান থেকে একটি বাক্য নির্বাচন করুন...</option>
+                    <option value="শুভ সকাল|おはようございます|Ohayou gozaimasu">শুভ সকাল (Ohayou)</option>
+                    <option value="ধন্যবাদ|ありがとうございます|Arigatou gozaimasu">ধন্যবাদ (Arigatou)</option>
+                    <option value="আমি বুঝতে পেরেছি|わかりました|Wakarimashita">আমি বুঝতে পেরেছি</option>
+                    <option value="জাপানি ভাষা সহজ|日本語は簡単です|Nihongo wa kantan desu">জাপানি ভাষা সহজ</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <section id="quiz" class="section-container">
+        <h2 class="section-title">🏆 ডাইনামিক লাইভ কুইজ</h2>
+        <div class="quiz-app">
+            <div class="quiz-header">
+                <span id="quiz-progress">প্রশ্ন: ১/৫</span>
+                <span style="color: var(--primary-color);">স্কোর: <span id="quiz-score">০</span></span>
+            </div>
+            <div id="quiz-body">
+                <div class="quiz-question" id="quiz-question-text">Loading...</div>
+                <div class="quiz-options" id="quiz-options-container">
+                    </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // --- 1. Global State & Local Storage (End-to-End Persistence) ---
+        let userXP = parseInt(localStorage.getItem('userXP')) || 0;
+        document.getElementById('savedScoreDisplay').innerText = userXP;
+
+        function updateXP(points) {
+            userXP += points;
+            localStorage.setItem('userXP', userXP);
+            document.getElementById('savedScoreDisplay').innerText = userXP;
+            showToast(`🎉 +${points} XP যুক্ত হয়েছে!`);
+        }
+
+        // --- 2. Theme Management ---
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.getElementById('themeToggle');
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                btn.innerText = '🌙 ডার্ক';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                btn.innerText = '☀️ লাইট';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        if(localStorage.getItem('theme') === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+            document.getElementById('themeToggle').innerText = '☀️ লাইট';
+        }
+
+        // --- 3. Scroll Progress Bar (Fast Performance) ---
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            document.getElementById('top-progress').style.width = (winScroll / height) * 100 + "%";
+        }, { passive: true });
+
+        // --- 4. Custom Toast Notification System ---
+        function showToast(message) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast show';
+            toast.innerHTML = `🔔 ${message}`;
+            container.appendChild(toast);
+            
+            setTimeout(() => { toast.classList.remove('show'); }, 3000);
+            setTimeout(() => { toast.remove(); }, 3500);
+        }
+
+        // --- 5. AI Native Voice System ---
+        function speakJapanese(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); 
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ja-JP';
+                utterance.rate = 0.85; 
+                window.speechSynthesis.speak(utterance);
+            } else {
+                showToast("⚠️ আপনার ব্রাউজার ভয়েস সাপোর্ট করে না!");
+            }
+        }
+
+        // --- 6. Smart Flashcard Render ---
+        const vocabData = [
+            { jp: "水", romaji: "Mizu", bn: "পানি" },
+            { jp: "食べる", romaji: "Taberu", bn: "খাওয়া" },
+            { jp: "学校", romaji: "Gakkou", bn: "স্কুল" },
+            { jp: "愛", romaji: "Ai", bn: "ভালোবাসা" },
+            { jp: "車", romaji: "Kuruma", bn: "গাড়ি" },
+            { jp: "本", romaji: "Hon", bn: "বই" }
+        ];
+
+        const flashcardContainer = document.getElementById('flashcardContainer');
+        vocabData.forEach(word => {
+            const card = document.createElement('div');
+            card.className = 'flashcard';
+            card.innerHTML = `
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">
+                        <h2>${word.jp}</h2>
+                        <p>${word.romaji}</p>
+                    </div>
+                    <div class="flashcard-back">
+                        <h3>${word.bn}</h3>
+                        <p>🔊 শুনতে ক্লিক করুন</p>
+                    </div>
+                </div>
+            `;
+            card.onclick = () => {
+                card.classList.toggle('flipped');
+                if(card.classList.contains('flipped')) { speakJapanese(word.jp); }
+            };
+            flashcardContainer.appendChild(card);
+        });
+
+        // --- 7. AI Chat Simulator ---
+        function triggerAIChat() {
+            const selector = document.getElementById('chatSelector');
+            if (!selector.value) return;
+
+            const [bengali, japanese, romaji] = selector.value.split('|');
+            const chatMsgs = document.getElementById('chatMsgs');
+
+            const userDiv = document.createElement('div');
+            userDiv.className = 'msg user';
+            userDiv.innerText = bengali;
+            chatMsgs.appendChild(userDiv);
+
+            setTimeout(() => {
+                const botDiv = document.createElement('div');
+                botDiv.className = 'msg bot';
+                botDiv.innerHTML = `<strong>জাপানি:</strong> ${japanese} <br><small>উচ্চারণ: ${romaji}</small>`;
+                chatMsgs.appendChild(botDiv);
+                chatMsgs.scrollTop = chatMsgs.scrollHeight;
+                speakJapanese(japanese);
+            }, 500);
+
+            selector.value = ""; 
+        }
+
+        // --- 8. Dynamic Quiz Engine Engine ---
+        const quizQuestions = [
+            { q: "'Arigatou' এর অর্থ কী?", options: ["শুভ সকাল", "ধন্যবাদ", "বিদায়"], answer: 1 },
+            { q: "'Sensei' (先生) কাকে বলা হয়?", options: ["ছাত্র", "বন্ধু", "শিক্ষক"], answer: 2 },
+            { q: "জাপানের রাজধানীর নাম কী?", options: ["ওসাকা", "টোকিও", "কিয়োটো"], answer: 1 },
+            { q: "পানি কে জাপানি ভাষায় কী বলে?", options: ["মিজু (Mizu)", "সাকুরা (Sakura)", "হোন (Hon)"], answer: 0 }
+        ];
+
+        let currentQuestionIndex = 0;
+        let sessionScore = 0;
+
+        function loadQuiz() {
+            if (currentQuestionIndex >= quizQuestions.length) {
+                document.getElementById('quiz-body').innerHTML = `
+                    <div style="text-align:center;">
+                        <h2>কুইজ সমাপ্ত! 🎯</h2>
+                        <p style="font-size:18px; margin:20px 0;">আপনি ${quizQuestions.length} টির মধ্যে ${sessionScore} টি সঠিক উত্তর দিয়েছেন।</p>
+                        <button class="btn btn-primary" onclick="resetQuiz()">আবার খেলুন</button>
+                    </div>`;
+                updateXP(sessionScore * 10);
+                return;
+            }
+
+            const qData = quizQuestions[currentQuestionIndex];
+            document.getElementById('quiz-progress').innerText = `প্রশ্ন: ${currentQuestionIndex + 1} / ${quizQuestions.length}`;
+            document.getElementById('quiz-question-text').innerText = qData.q;
+            
+            const optionsContainer = document.getElementById('quiz-options-container');
+            optionsContainer.innerHTML = '';
+
+            qData.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'q-btn';
+                btn.innerText = opt;
+                btn.onclick = () => handleQuizAnswer(btn, index === qData.answer);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function handleQuizAnswer(btn, isCorrect) {
+            const allBtns = document.querySelectorAll('.q-btn');
+            allBtns.forEach(b => b.style.pointerEvents = 'none'); // Disable clicking others
+
+            if (isCorrect) {
+                btn.classList.add('correct');
+                sessionScore++;
+                document.getElementById('quiz-score').innerText = sessionScore * 10;
+                speakJapanese("正解"); // Says "Seikai" (Correct)
+            } else {
+                btn.classList.add('wrong');
+                allBtns[quizQuestions[currentQuestionIndex].answer].classList.add('correct');
+                speakJapanese("違う"); // Says "Chigau" (Wrong)
+            }
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                loadQuiz();
+            }, 1500);
+        }
+
+        function resetQuiz() {
+            currentQuestionIndex = 0;
+            sessionScore = 0;
+            document.getElementById('quiz-score').innerText = "0";
+            document.getElementById('quiz-body').innerHTML = `
+                <div class="quiz-question" id="quiz-question-text"></div>
+                <div class="quiz-options" id="quiz-options-container"></div>`;
+            loadQuiz();
+        }
+
+        // Initialize App components
+        window.onload = () => {
+            loadQuiz();
+            showToast("Nihongo Shikhi Pro-তে স্বাগতম! 🌸");
+        };
+    </script>
+</body>
+</html>
